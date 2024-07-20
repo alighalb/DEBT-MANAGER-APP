@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debt Manager App</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-mode">
+    <div id="app" class="container mx-auto p-6">
+        <button id="toggleBtn" class="bg-blue-500 text-white p-2 rounded">Switch to Dashboard</button>
+        <div id="settingsArea" class="relative inline-block text-left">
+            <button class="bg-gray-800 text-white p-2 rounded ml-4">Settings</button>
+            <div id="settingsDropdown" class="dropdown absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg py-1 z-20">
+                <a href="#" id="toggleLangBtn" class="block px-4 py-2 text-sm text-white">العربية</a>
+                <a href="#" id="toggleModeBtn" class="block px-4 py-2 text-sm text-white">Light Mode</a>
+            </div>
+        </div>
+        <div id="content" class="mt-6"></div>
+    </div>
+
+    <!-- Delete Confirmation Popup -->
+    <div id="deleteConfirm" class="popup hidden">
+        <div class="popup-inner">
+            <h2 class="text-2xl mb-4 text-center text-white">Are you sure you want to delete this person?</h2>
+            <div class="flex justify-center space-x-4">
+                <button id="confirmDelete" class="bg-red-500 text-white p-2 rounded">Yes, Delete</button>
+                <button id="cancelDelete" class="bg-gray-500 text-white p-2 rounded">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Popup -->
+    <div id="editPopup" class="popup hidden">
+        <div class="popup-inner">
+            <h2 class="text-2xl mb-4 text-center text-white">Edit Customer Data</h2>
+            <form id="edit-form">
+                <div class="mb-4">
+                    <label class="block text-white">Name:</label>
+                    <input type="text" id="edit-name" class="w-full p-2 border border-gray-600 rounded bg-gray-700 text-white" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-white">Phone Number:</label>
+                    <div class="flex">
+                        <span class="p-2 bg-gray-700 text-white">+964</span>
+                        <input type="text" id="edit-phone" class="w-full p-2 border border-gray-600 rounded bg-gray-700 text-white" required>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-white">Second Phone Number:</label>
+                    <div class="flex">
+                        <span class="p-2 bg-gray-700 text-white">+964</span>
+                        <input type="text" id="edit-phone2" class="w-full p-2 border border-gray-600 rounded bg-gray-700 text-white">
+                    </div>
+                </div>
+                <input type="hidden" id="edit-id">
+                <div class="flex justify-center space-x-4">
+                    <button type="button" id="saveEdit" class="bg-green-500 text-white p-2 rounded">Save</button>
+                    <button type="button" id="cancelEdit" class="bg-red-500 text-white p-2 rounded">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Info Popup -->
+    <div id="infoPopup" class="popup hidden">
+        <div class="popup-inner">
+            <h2 class="text-2xl mb-4 text-center text-white">Customer Information</h2>
+            <div id="info-content" class="text-white mb-4"></div>
+            <div class="flex justify-center space-x-4">
+                <button id="editInfo" class="bg-yellow-500 text-white p-2 rounded">Edit</button>
+                <button id="deleteInfo" class="bg-red-500 text-white p-2 rounded">Delete</button>
+                <button id="transactionInfo" class="bg-blue-500 text-white p-2 rounded">Transactions</button>
+                <button id="closeInfo" class="bg-gray-500 text-white p-2 rounded">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Initialization Script -->
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+      import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyA7e69G9s3K5vVoNVtAGLIqf6MU0TUE_mo",
+        authDomain: "dept-manager-app.firebaseapp.com",
+        projectId: "dept-manager-app",
+        storageBucket: "dept-manager-app.appspot.com",
+        messagingSenderId: "29398266696",
+        appId: "1:29398266696:web:53bcc28aa169591297f97d",
+        measurementId: "G-CF9EN9WT9Q"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+      window.db = db; // Expose db to global scope
+    </script>
+
+    <!-- jQuery and jsPDF Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+
+    <!-- Custom Script -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
